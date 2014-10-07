@@ -154,7 +154,9 @@ module Canvas
   
     def put(endpoint, params={})
       generate_uri(endpoint, params['query_parameters'] || params[:query_parameters])
-      request = Typhoeus::Request.new(@uri.to_s, method: :put)
+      request = Typhoeus::Request.new(@uri.to_s, method: :put, headers: {
+        "Content-Type" => "application/x-www-form-urlencoded"
+      })
       request.options[:body] = clean_params(params)
       retrieve_response(request)
     end
